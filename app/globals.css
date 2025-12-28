@@ -1,0 +1,9 @@
+/* Global styles for Next.js app; Tailwind base is loaded via CDN in layout. */
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}

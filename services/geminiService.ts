@@ -2,7 +2,15 @@ import { GoogleGenAI } from "@google/genai";
 import { SYSTEM_PROMPT } from "../constants";
 
 const getAIClient = () => {
-  return new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey =
+    process.env.NEXT_PUBLIC_GEMINI_API_KEY ||
+    process.env.NEXT_PUBLIC_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("Missing NEXT_PUBLIC_GEMINI_API_KEY");
+  }
+
+  return new GoogleGenAI({ apiKey });
 };
 
 export interface ValidationResult {

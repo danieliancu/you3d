@@ -1,3 +1,4 @@
+'use client';
 import React, { useState, useRef, useEffect } from 'react';
 import { generateStylizedAvatar, validateImage } from './services/geminiService';
 import { GenerationResult } from './types';
