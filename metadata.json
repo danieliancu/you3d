@@ -1,0 +1,7 @@
+{
+  "name": "3dfigure",
+  "description": "Convert your photos into cute 3D stylized characters inspired by the provided reference style.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
