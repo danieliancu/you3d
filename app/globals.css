@@ -2,6 +2,7 @@
 html, body {
   padding: 0;
   margin: 0;
+  font-family: 'Onest', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 * {

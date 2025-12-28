@@ -15,12 +15,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&display=swap"
+        />
         <Script
           src="https://cdn.tailwindcss.com"
           strategy="beforeInteractive"
         />
       </head>
-      <body className="bg-gray-50 min-h-screen">{children}</body>
+      <body className="bg-gray-50 min-h-screen font-[Onest]">{children}</body>
     </html>
   );
 }
