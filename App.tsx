@@ -80,6 +80,29 @@ const HOME_FAQ: { q: string; body: React.ReactNode }[] = [
   },
 ];
 
+const PRODUCTION_STEPS = [
+  {
+    title: 'Upload photos & confirm preview',
+    description: 'Share your shots and get an instant preview to lock in the pose and likeness.',
+    image: '/images/1.png',
+  },
+  {
+    title: '3D modeling and adjustments',
+    description: 'Our artists refine details, proportions, and textures for a true-to-photo mini.',
+    image: '/images/2.png',
+  },
+  {
+    title: 'High-detail 3D printing',
+    description: 'Premium printing captures fine features with a smooth, collector-grade finish.',
+    image: '/images/3.png',
+  },
+  {
+    title: 'Secure, careful delivery',
+    description: 'Each figurine is checked, packed with care, and shipped with tracking.',
+    image: '/images/4.png',
+  },
+];
+
 
 const App: React.FC = () => {
   const [selectedSize, setSelectedSize] = useState('6cm');
@@ -246,6 +269,57 @@ const App: React.FC = () => {
             <button className="bg-white px-10 py-4 rounded-full text-orange-600 font-black text-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
               Start customizing
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Production Process */}
+      <section className="py-16 pb-0 mt-0 md:mt-10">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-20">
+          </div>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-4">
+            {PRODUCTION_STEPS.map((step, idx) => (
+              <React.Fragment key={step.title}>
+                <div className="flex-1 flex flex-col items-center text-center gap-4">
+                  <div className="relative pt-16 pb-8 px-6 w-full h-full flex flex-col items-center text-center gap-4 overflow-visible">
+                    <div className="absolute -top-16 left-1/2 -translate-x-1/2">
+                      <div className="w-36 h-36 md:w-44 md:h-44 flex items-center justify-center overflow-visible">
+                        <img
+                          src={step.image}
+                          alt={step.title}
+                          className="mb-0 md:mb-20 w-32 md:w-44 h-auto max-h-[14rem] md:max-h-[16rem] object-contain drop-shadow-xl"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      className="absolute -top-3 -left-3 w-20 h-20 rounded-full bg-orange-500 text-white font-black text-xl md:text-xxl flex items-center justify-center shadow-lg"
+                      style= {{ fontSize:"4rem" }}
+                    >
+                      {idx + 1}
+                    </div>
+                    <div className="mt-14 space-y-2">
+                      <h3 className="text-lg font-black text-gray-900 leading-tight">{step.title}</h3>
+                      <p className="text-sm text-gray-600 leading-relaxed">{step.description}</p>
+                    </div>
+                  </div>
+                  {idx < PRODUCTION_STEPS.length - 1 && (
+                    <div className="md:hidden flex items-center justify-center w-full">
+                      <svg className="w-8 h-8 text-orange-300 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+                        <path strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" d="M8 24h28m-6-8 8 8-8 8" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                {idx < PRODUCTION_STEPS.length - 1 && (
+                  <div className="hidden md:flex items-center justify-center w-12 shrink-0">
+                    <svg className="w-12 h-12 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+                      <path strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" d="M8 24h28m-6-8 8 8-8 8" />
+                    </svg>
+                  </div>
+                )}
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </section>
