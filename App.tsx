@@ -553,8 +553,8 @@ const App: React.FC = () => {
               <img
                 src="/images/group.png"
                 alt="Customers with 3D figures"
-                className="max-h-96 w-auto object-containl"
-                style = {{ mixBlendMode: "multiply" } }
+                className="max-h-96 w-auto object-containl relative md:absolute"
+                style = {{ mixBlendMode: "multiply", height: "490px" } }
               />
             </div>
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">

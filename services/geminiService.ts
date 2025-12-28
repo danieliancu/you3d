@@ -89,7 +89,7 @@ export const generateStylizedAvatar = async (userImageBase64: string, role: 'per
           },
         },
         {
-          text: `${roleInstruction}\n\n${SYSTEM_PROMPT}`,
+          text: `${roleInstruction}\n\n${SYSTEM_PROMPT}\n\nADDITIONAL RENDERING RULES (APPLY TO ALL OUTPUTS):\nFOR PEOPLE:\n- Clothing must NOT contain any logos, symbols, patterns, labels, written text or prints.\n- Skin must NOT contain freckles.\n- Elderly people must NOT have detailed wrinkles. The face must look smooth, stylized and youthful but still elderly in proportions (hair gray allowed, but skin smooth).\n- Keep the human as a stylized figure with simplified smooth surfaces.\n\nFOR PETS / ANIMALS:\n- NO visible fur texture.\n- NO visible whiskers.\n- Surface must be smooth, toy-like, with no fine details like hair strands.\n\nGENERAL:\n- The result is used for a 3D model that does NOT support fine details. Avoid micro-details. Prefer smooth plastic toy-like finish.\n- Maintain the same pose logic already implemented (standing for humans, sitting rules for pets).\n- Keep everything else unchanged.`,
         },
       ],
     },
