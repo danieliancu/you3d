@@ -69,7 +69,7 @@ export const validateImage = async (userImageBase64: string, role: string, style
   }
 };
 
-export const generateStylizedAvatar = async (userImageBase64: string, role: 'person' | 'pet'): Promise<string> => {
+export const generateStylizedAvatar = async (userImageBase64: string, role: 'person' | 'pet', styleId?: string): Promise<string> => {
   const ai = getAIClient();
   
   const cleanUserImg = userImageBase64.split(',')[1] || userImageBase64;
@@ -77,6 +77,10 @@ export const generateStylizedAvatar = async (userImageBase64: string, role: 'per
   const roleInstruction = role === 'pet' 
     ? "The subject is a PET. Strictly follow the SITTING posture rules for animals."
     : "The subject is a PERSON. Strictly follow the STANDING 'A' pose posture rules for humans.";
+
+  const connectedInstruction = styleId === '2 people (connected)'
+    ? "The image contains exactly TWO PEOPLE. Generate ONE image that keeps BOTH people together in a warm embrace/hug pose while still respecting the chibi aesthetic. Show the full bodies of both characters, standing close and connected. Do NOT separate them or crop either person."
+    : "";
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash-image',
@@ -89,7 +93,7 @@ export const generateStylizedAvatar = async (userImageBase64: string, role: 'per
           },
         },
         {
-          text: `${roleInstruction}\n\n${SYSTEM_PROMPT}\n\nADDITIONAL RENDERING RULES (APPLY TO ALL OUTPUTS):\nFOR PEOPLE:\n- Clothing must NOT contain any logos, symbols, patterns, labels, written text or prints.\n- Skin must NOT contain freckles.\n- Elderly people must NOT have detailed wrinkles. The face must look smooth, stylized and youthful but still elderly in proportions (hair gray allowed, but skin smooth).\n- Keep the human as a stylized figure with simplified smooth surfaces.\n\nFOR PETS / ANIMALS:\n- NO visible fur texture.\n- NO visible whiskers.\n- Surface must be smooth, toy-like, with no fine details like hair strands.\n\nGENERAL:\n- The result is used for a 3D model that does NOT support fine details. Avoid micro-details. Prefer smooth plastic toy-like finish.\n- Maintain the same pose logic already implemented (standing for humans, sitting rules for pets).\n- Keep everything else unchanged.`,
+          text: `${roleInstruction}\n${connectedInstruction ? `${connectedInstruction}\n` : ''}\n${SYSTEM_PROMPT}\n\nADDITIONAL RENDERING RULES (APPLY TO ALL OUTPUTS):\nFOR PEOPLE:\n- Clothing must NOT contain any logos, symbols, patterns, labels, written text or prints.\n- Skin must NOT contain freckles.\n- Elderly people must NOT have detailed wrinkles. The face must look smooth, stylized and youthful but still elderly in proportions (hair gray allowed, but skin smooth).\n- Keep the human as a stylized figure with simplified smooth surfaces.\n\nFOR PETS / ANIMALS:\n- NO visible fur texture.\n- NO visible whiskers.\n- Surface must be smooth, toy-like, with no fine details like hair strands.\n\nGENERAL:\n- The result is used for a 3D model that does NOT support fine details. Avoid micro-details. Prefer smooth plastic toy-like finish.\n- Maintain the same pose logic already implemented (standing for humans, sitting rules for pets).\n- Keep everything else unchanged.`,
         },
       ],
     },

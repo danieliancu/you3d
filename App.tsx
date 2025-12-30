@@ -47,7 +47,7 @@ const PRICING: Record<string, Record<string, { current: string; original: string
 const STYLES = [
   { id: "1 person", label: "1 person", image: "/images/1person.png", slots: [{ role: "person", label: "Photo" }] },
   { id: "2 people", label: "2 people", image: "/images/2person.png", slots: [{ role: "person", label: "Person 1" }, { role: "person", label: "Person 2" }] },
-  { id: "2 people (connected)", label: "2 people (connected)", image: "/images/2personConnected.png", slots: [{ role: "person", label: "Person 1" }, { role: "person", label: "Person 2" }] },
+  { id: "2 people (connected)", label: "2 people (connected)", image: "/images/2personConnected.png", slots: [{ role: "person", label: "Both people (one photo)" }] },
   { id: "1 pet", label: "1 pet", image: "/images/pet.png", slots: [{ role: "pet", label: "Pet Photo" }] },
   { id: "1 person + 1 pet", label: "1 person + 1 pet", image: "/images/1person1pet.png", slots: [{ role: "person", label: "Person" }, { role: "pet", label: "Pet" }] },
   { id: "Non-human figure", label: "Non-human figure", image: "/images/nonhuman.png", slots: [{ role: "person", label: "Figure Photo" }] },
@@ -172,7 +172,7 @@ const App: React.FC = () => {
       }
 
       // 2. Proceed to Generation
-      const generatedUrl = await generateStylizedAvatar(slot.userImage, slot.role);
+      const generatedUrl = await generateStylizedAvatar(slot.userImage, slot.role, selectedStyle);
       setSlots(prev => prev.map(s => 
         s.id === slotId ? { ...s, result: { imageUrl: generatedUrl, originalUrl: slot.userImage!, status: 'success' } } : s
       ));
@@ -369,12 +369,12 @@ const App: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-8 bg-gray-50/30">
-                <div className="flex flex-col h-full">
-                  <div className="flex flex-wrap gap-2 mb-8 justify-center lg:justify-start">
-                    {SIZES.map((size) => (
-                      <button
-                        key={size}
+              <div className="p-8 bg-white">
+                  <div className="flex flex-col h-full">
+                    <div className="flex flex-wrap gap-2 mb-8 justify-center lg:justify-start">
+                      {SIZES.map((size) => (
+                        <button
+                          key={size}
                         onClick={() => setSelectedSize(size)}
                         className={`px-4 py-2 rounded-lg border font-bold text-sm transition-all flex flex-col items-center min-w-[86px] ${
                           selectedSize === size
@@ -392,6 +392,7 @@ const App: React.FC = () => {
                       <span className="text-md font-black text-orange-600">Upload Customization</span>
                     </div>
                     
+
                     <div className="mt-8 flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
                       {slots.map((slot) => (
                         <div key={slot.id} className="flex flex-col items-center gap-4">
@@ -553,8 +554,8 @@ const App: React.FC = () => {
               <img
                 src="/images/group.png"
                 alt="Customers with 3D figures"
-                className="max-h-96 w-auto object-containl relative md:absolute"
-                style = {{ mixBlendMode: "multiply", height: "490px" } }
+                className="max-h-96 w-auto relative md:absolute"
+                style = {{ mixBlendMode: "multiply", height: "520px", maxHeight:"unset", objectFit:"contain" } }
               />
             </div>
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
