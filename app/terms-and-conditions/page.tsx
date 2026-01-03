@@ -35,7 +35,7 @@ export default function TermsConditionsPage() {
           <section className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6">
             <h2 className="text-2xl md:text-3xl font-black text-gray-900">Shipping</h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              For most parts of the world, the orders are supposed to reach your door. Please track the status of the parcel via the tracking number provided in email. Then, contact local post office for parcel if not received within expected shipping time. Finally, contact us for further information.
+              The orders are supposed to reach your door. Please track the status of the parcel via the tracking number provided in email. Then, contact local post office for parcel if not received within expected shipping time. Finally, contact us for further information.
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
               Notes: Shipping estimates are from day of shipping, not from day of ordering. Customers are responsible for lost parcels due to wrong shipping information.
@@ -45,7 +45,7 @@ export default function TermsConditionsPage() {
           <section className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-6">
             <h2 className="text-2xl md:text-3xl font-black text-gray-900">Modifications</h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              My3DFigure.co.uk reserves the right to modify this website, and the rules and regulations governing its use, at any time. Modifications will be posted on the website, and users are deemed to be apprised of and bound by any changes. My3DFigure.co.uk may make changes in the products and/or services described in this website at any time.
+              you3d.uk reserves the right to modify this website, and the rules and regulations governing its use, at any time. Modifications will be posted on the website, and users are deemed to be apprised of and bound by any changes. you3d.uk may make changes in the products and/or services described in this website at any time.
             </p>
           </section>
 

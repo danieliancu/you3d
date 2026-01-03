@@ -20,6 +20,65 @@
     <meta name="twitter:description" content="Upload a photo and get a chibi-style 3D figurine or keychain. AI preview + artist polish.">
     <meta name="twitter:image" content="https://you3d.uk/images/hero.png">
     <meta name="theme-color" content="#f97316">
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://esm.sh">
+    <link rel="preload" href="/index.css" as="style">
+    <style>
+      :root {
+        background-color: #ffffff;
+        color: #0f172a;
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+      body {
+        margin: 0;
+        background-color: #ffffff;
+      }
+      #root {
+        opacity: 0;
+      }
+      body[data-style-ready="true"] #root {
+        opacity: 1;
+      }
+      #app-loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+        background: #ffffff;
+        z-index: 9999;
+        transition: opacity 180ms ease-out, visibility 180ms ease-out;
+      }
+      #app-loader .spinner {
+        width: 64px;
+        height: 64px;
+        border-radius: 999px;
+        border: 5px solid #e5e7eb;
+        border-top-color: #f97316;
+        animation: app-loader-spin 0.8s linear infinite;
+      }
+      #app-loader .label {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #0f172a;
+      }
+      @keyframes app-loader-spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      body[data-style-ready="true"] #app-loader {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        #root { transition: opacity 160ms ease-out; }
+      }
+    </style>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -35,7 +94,7 @@
         }
       }
     </script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com" id="tailwind-cdn"></script>
 <script type="importmap">
 {
   "imports": {
@@ -46,10 +105,50 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+<link rel="stylesheet" href="/index.css" id="app-css">
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gray-50 min-h-screen" data-style-ready="false">
+    <div id="app-loader" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+    </div>
     <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
+<script>
+  (function gateRenderUntilStylesReady() {
+    var whenLoaded = function (el, isReady) {
+      return new Promise(function (resolve) {
+        if (!el) return resolve();
+        if (isReady(el)) return resolve();
+        el.addEventListener('load', resolve, { once: true });
+        el.addEventListener('error', resolve, { once: true });
+      });
+    };
+
+    var markReady = function () {
+      if (document.body) document.body.setAttribute('data-style-ready', 'true');
+      var loader = document.getElementById('app-loader');
+      if (loader && loader.parentNode) {
+        setTimeout(function () {
+          if (loader.parentNode) loader.parentNode.removeChild(loader);
+        }, 400);
+      }
+    };
+
+    var tailwindScript = document.getElementById('tailwind-cdn');
+    var appCss = document.getElementById('app-css');
+    var waitFor = [
+      whenLoaded(tailwindScript, function (el) { return el.readyState === 'complete' || el.readyState === 'loaded'; }),
+      whenLoaded(appCss, function (el) { return !!el.sheet; })
+    ];
+
+    Promise.all(waitFor).then(function () {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(markReady);
+      });
+    });
+
+    setTimeout(markReady, 1000);
+  })();
+</script>
 </body>
 </html>

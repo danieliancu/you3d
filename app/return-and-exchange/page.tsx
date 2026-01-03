@@ -14,7 +14,7 @@ const steps = [
       <>
         Contact Customer Service and request return detail.
         <br />
-        Email: <a className="underline text-orange-600" href="mailto:cs@my3dfigure.co.uk">cs@my3dfigure.co.uk</a>
+        Email: <a className="underline text-orange-600" href="mailto:office@you3d.uk">office@you3d.uk</a>
       </>
     ),
   },
@@ -45,7 +45,7 @@ const precautions = [
   "Coupon codes expires after using cannot be restored after return.",
   "For personalized products, if you need to cancel or replace the product or replace the personalized content, you will have to pay 30% of the product price as the customization fee. (Special note: Even if you contact us immediately after placing the order to cancel/modify, we will charge the corresponding production fee because the customized product will be produced immediately once the order is placed in order to ensure a timely production and delivery.)",
   "The return packaging must use the original packaging, and the packaging should be intact.",
-  "Return address: Attn: Qiantong Deng. Qianhai Maiyuan, Dalongcunduan #1, Xinling Road, Dalong Street, Panyu District, Guangzhou, Guangdong, 511450 China. Tel: +86 18122124602",
+  "Return address: 13 Vernon Court,425 Sutton Road, Southend-on-Sea, Essex, SS2 5AP, United Kingdom.",
   "We reserve the right to make any changes to this policy at any time. Notification of any changes will be posted on this page. If you have any questions about cancellations or any of our other policies, please contact our customer service.",
 ];
 

@@ -113,6 +113,7 @@ const App: React.FC = () => {
   const [validationWarning, setValidationWarning] = useState<string | null>(null);
   
   const fileInputRefs = useRef<Record<number, HTMLInputElement | null>>({});
+  const styleSectionRef = useRef<HTMLElement | null>(null);
 
   const activeStyle = STYLES.find(s => s.id === selectedStyle) || STYLES[0];
   const price = PRICING[selectedSize]?.[selectedStyle] || { current: 'N/A', original: 'N/A' };
@@ -266,7 +267,10 @@ const App: React.FC = () => {
               >
               Upload your photo and instantly preview your character ready for 3D printing. Printed in the UK. Quality guaranteed.
             </p>
-            <button className="bg-white px-10 py-4 rounded-full text-orange-600 font-black text-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+            <button
+              className="bg-white px-10 py-4 rounded-full text-orange-600 font-black text-xl shadow-lg hover:shadow-xl transition-all hover:-translate-y-1"
+              onClick={() => styleSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+            >
               Start customizing
             </button>
           </div>
@@ -274,7 +278,7 @@ const App: React.FC = () => {
       </section>
 
       {/* Production Process */}
-      <section className="py-16 pb-0 mt-0 md:mt-10">
+      <section className="py-0 md:py-16 pb-0 mt-0 md:mt-10">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-20">
           </div>
@@ -282,8 +286,8 @@ const App: React.FC = () => {
             {PRODUCTION_STEPS.map((step, idx) => (
               <React.Fragment key={step.title}>
                 <div className="flex-1 flex flex-col items-center text-center gap-4">
-                  <div className="relative pt-16 pb-8 px-6 w-full h-full flex flex-col items-center text-center gap-4 overflow-visible">
-                    <div className="absolute -top-16 left-1/2 -translate-x-1/2">
+                  <div className="relative pt-12 md:pt-16 pb-8 px-6 w-full h-full flex flex-col items-center text-center gap-4 overflow-visible">
+                    <div className="absolute -top-16 left-1/2 -translate-x-1/2 hidden md:flex">
                       <div className="w-36 h-36 md:w-44 md:h-44 flex items-center justify-center overflow-visible">
                         <img
                           src={step.image}
@@ -293,23 +297,16 @@ const App: React.FC = () => {
                       </div>
                     </div>
                     <div
-                      className="absolute -top-3 -left-3 w-20 h-20 rounded-full bg-orange-500 text-white font-black text-xl md:text-xxl flex items-center justify-center shadow-lg"
+                      className="absolute -top-10 left-1/2 -translate-x-1/2 md:left-[-12px] md:translate-x-0 md:-top-3 w-20 h-20 rounded-full bg-orange-500 text-white font-black text-xl md:text-xxl flex items-center justify-center shadow-lg"
                       style= {{ fontSize:"4rem" }}
                     >
                       {idx + 1}
                     </div>
-                    <div className="mt-14 space-y-2">
+                    <div className="mt-0 md:mt-14 space-y-2">
                       <h3 className="text-lg font-black text-gray-900 leading-tight">{step.title}</h3>
                       <p className="text-sm text-gray-600 leading-relaxed">{step.description}</p>
                     </div>
                   </div>
-                  {idx < PRODUCTION_STEPS.length - 1 && (
-                    <div className="md:hidden flex items-center justify-center w-full">
-                      <svg className="w-8 h-8 text-orange-300 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 48 48">
-                        <path strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" d="M8 24h28m-6-8 8 8-8 8" />
-                      </svg>
-                    </div>
-                  )}
                 </div>
                 {idx < PRODUCTION_STEPS.length - 1 && (
                   <div className="hidden md:flex items-center justify-center w-12 shrink-0">
@@ -325,15 +322,15 @@ const App: React.FC = () => {
       </section>
 
       {/* Product Selection */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50" ref={styleSectionRef}>
         <div className="max-w-7xl mx-auto px-4">
           <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
             <div className="grid lg:grid-cols-[1fr_1.5fr] divide-x divide-gray-100">
               
               <div className="p-8">
                 <div className="mb-8">
-                   <h2 className="text-4xl font-black italic text-gray-900 mb-12 tracking-tighter uppercase text-center">Choose Your Style:</h2>
-                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                   <h2 className="text-3xl md:text-4xl font-black italic text-gray-900 mb-12 tracking-tighter uppercase text-center">Choose Your Style:</h2>
+                   <div className="grid grid-cols-3 gap-3">
                      {STYLES.map((style) => (
                        <button
                          key={style.id}
@@ -363,7 +360,7 @@ const App: React.FC = () => {
                     <span className="text-lg text-gray-400 line-through">£{price.original}</span>
                     <span className="text-xs font-bold bg-orange-100 text-orange-600 px-2 py-0.5 rounded uppercase ml-2">60% OFF</span>
                   </div>
-                  <p className="text-[11px] font-bold text-orange-600 uppercase tracking-widest leading-relaxed">
+                  <p className="hidden md:block text-[11px] font-bold text-orange-600 uppercase tracking-widest leading-relaxed">
                     Personalized {selectedStyle} Figurine.<br/>High detailed 3D modeling from your photos.
                   </p>
                 </div>
@@ -546,16 +543,16 @@ const App: React.FC = () => {
       </section>
 
       {/* FAQ */}
-      <section className="py-24 bg-gray-50">
+      <section className="pb-24 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-4xl font-black italic text-gray-900 mb-12 tracking-tighter uppercase text-center">Frequently Asked Questions</h2>
+          <h2 className="text-3xl md:text-4xl font-black italic text-gray-900 mb-12 tracking-tighter uppercase text-center">Frequently Asked Questions</h2>
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="flex items-center justify-center h-full">
               <img
                 src="/images/group.png"
                 alt="Customers with 3D figures"
-                className="max-h-96 w-auto relative md:absolute"
-                style = {{ mixBlendMode: "multiply", height: "520px", maxHeight:"unset", objectFit:"contain" } }
+                className="h-auto md:max-h-96 w-auto relative md:absolute"
+                style = {{ mixBlendMode: "multiply", objectFit:"contain" } }
               />
             </div>
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
@@ -605,6 +602,11 @@ const App: React.FC = () => {
         }
         .animate-marquee {
           animation: marquee 22s linear infinite;
+        }
+        @media (max-width: 768px) {
+          .animate-marquee {
+            animation-duration: 16s;
+          }
         }
       `}</style>
     </div>

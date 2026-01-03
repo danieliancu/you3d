@@ -34,14 +34,14 @@ export default function TermsOfShipmentPage() {
           <section className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-4">
             <h2 className="text-2xl md:text-3xl font-black text-gray-900">Shipping & Delivery</h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              Usually production and shipping take up to 7 business days. Once shipped, UK orders deliver in 9-15 business days. International shipping times vary by destination. During holidays, production time may vary.
+              Usually production and shipping take up to 7 business days. During holidays, production time may vary.
             </p>
           </section>
 
           <section className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-4">
             <h2 className="text-2xl md:text-3xl font-black text-gray-900">Processing Time</h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              All My3DFigureUK items are made-to-order. Popular styles ordered by 11PM PST ship the same day; most styles ship within 24 hours. Engraved or personalized orders may take 5-7 working days. During peak holiday and promotional periods, processing times may be longer.
+              All you3d.uk items are made-to-order. Popular styles ordered by 11PM PST ship the same day; most styles ship within 24 hours. Engraved or personalized orders may take 5-7 working days. During peak holiday and promotional periods, processing times may be longer.
             </p>
           </section>
 
@@ -65,13 +65,6 @@ export default function TermsOfShipmentPage() {
             </p>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
               Shipping times are estimates from the day of shipping. Delays can occur due to factors such as weather, natural disaster, strikes, or other uncontrollable events.
-            </p>
-          </section>
-
-          <section className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-4">
-            <h2 className="text-2xl md:text-3xl font-black text-gray-900">International Shipping</h2>
-            <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              We gladly fulfill international orders. Production time remains the same; shipping costs vary by destination and may include customs or tax charges. All prices on our site are GBP; your card will be charged in your respective currency at checkout.
             </p>
           </section>
 

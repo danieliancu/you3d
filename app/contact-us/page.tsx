@@ -29,7 +29,7 @@ const faqs = [
   {
     question: "How long does it take to receive my product?",
     answer:
-      "Production and dispatch take about 7-9 business days. UK delivery is typically 8-15 business days after shipment. International times vary by destination. Holiday periods may extend production.",
+      "Production and dispatch take about 7-9 business days. Holiday periods may extend production.",
   },
 ];
 

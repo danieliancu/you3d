@@ -43,9 +43,9 @@ export default function AboutUsPage() {
         <div className="max-w-5xl mx-auto px-4 md:px-8 space-y-12">
           <header className="space-y-4 text-center">
             <p className="text-xs font-black uppercase tracking-[0.25em] text-orange-600">About Us</p>
-            <h1 className="text-4xl md:text-5xl font-black text-gray-900">Bring Your Memories to Life in 3D</h1>
+            <h1 className="text-4xl md:text-5xl font-black text-gray-900">Bring Yourself to Life in 3D</h1>
             <p className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto">
-              At My 3D FigureUK, we turn your favorite photos into stunning, lifelike 3D printed figurines — you, loved ones, kids, pets, or team heroes. Every piece is crafted to preserve the moments that matter most.
+              We turn your favorite photos into stunning, lifelike 3D printed figurines — you, loved ones, kids, pets, or team heroes. Every piece is crafted to preserve the moments that matter most.
             </p>
           </header>
 
@@ -115,14 +115,14 @@ export default function AboutUsPage() {
           <section className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-4">
             <h2 className="text-2xl md:text-3xl font-black text-gray-900">Questions?</h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              📧 Email: <a href="mailto:cs@my3dfigure.co.uk" className="text-orange-600 underline">cs@my3dfigure.co.uk</a>
+              Email: <a href="mailto:cs@my3dfigure.co.uk" className="text-orange-600 underline">office@you3d.uk</a>
             </p>
           </section>
 
           <section className="bg-white rounded-3xl border border-gray-100 shadow-sm p-6 md:p-8 space-y-4">
             <h2 className="text-2xl md:text-3xl font-black text-gray-900">Cancellation Policy</h2>
             <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-              Once your order has been submitted we immediately begin production on personalized items. To cancel, a 30% restocking fee applies. My 3D Figure reserves the right to amend this policy at any time; updates will be published on this page. For inquiries, contact our Customer Service Representatives.
+              Once your order has been submitted we immediately begin production on personalized items. To cancel, a 30% restocking fee applies. you3D.uk reserves the right to amend this policy at any time; updates will be published on this page. For inquiries, contact our Customer Service Representatives.
             </p>
           </section>
         </div>

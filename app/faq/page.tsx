@@ -11,7 +11,7 @@ const FAQ_ITEMS: { q: string; body: React.ReactNode }[] = [
       <div className="space-y-2 text-sm md:text-base text-gray-700 leading-relaxed">
         <p>You will receive a tracking number by email once the order is sent. Track it via “TRACK MY ORDER.”</p>
         <ol className="list-decimal list-inside space-y-1">
-          <li>Go to http://www.My3DFigure.co.uk/trackorder/</li>
+          <li>Go to https://www.you3d.uk/trackorder/</li>
           <li>Enter the email used to place your order, then click “Check”.</li>
           <li>Click the yellow “Track” button for detailed info.</li>
         </ol>
@@ -30,7 +30,7 @@ const FAQ_ITEMS: { q: string; body: React.ReactNode }[] = [
     q: "SHIPPING & DELIVERY - Do you ship worldwide?",
     body: (
       <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-        Yes. If your country is not listed, contact us. Local taxes or customs fees may apply and are the customer’s responsibility.
+        No. We currently deliver only within the United Kingdom. International shipping is not available at this time.
       </p>
     ),
   },
@@ -40,7 +40,7 @@ const FAQ_ITEMS: { q: string; body: React.ReactNode }[] = [
       <div className="space-y-2 text-sm md:text-base text-gray-700 leading-relaxed">
         <p>New and unworn items: return within 60 days. Personalized items incur a 30% restocking fee; customer pays return/replacement postage.</p>
         <p>Cancellation: orders move to production quickly; cancellations may incur a 30% restocking fee.</p>
-        <p>My3DFigureUK may amend this policy; changes will be published here.</p>
+        <p>you3d.uk may amend this policy; changes will be published here.</p>
       </div>
     ),
   },
@@ -173,7 +173,7 @@ const FAQ_ITEMS: { q: string; body: React.ReactNode }[] = [
     q: "COUPON CODE - How can I get a discount?",
     body: (
       <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-        Subscribe to the newsletter for deals and offers, and check www.My3DFigure.co.uk for promotions. Support can assist if you need help applying a code.
+        Subscribe to the newsletter for deals and offers, and check www.you3d.uk for promotions. Support can assist if you need help applying a code.
       </p>
     ),
   },
@@ -195,7 +195,7 @@ export default function FAQPage() {
             </p>
           </header>
 
-          <section className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
+          <section className="bg-white rounded-3xl px-8 border border-gray-100 shadow-sm">
             <div className="space-y-4">
               {FAQ_ITEMS.map((faq, idx) => (
                 <div key={idx} className="border-b border-gray-100 last:border-0">
