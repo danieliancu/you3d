@@ -9,6 +9,7 @@ const SiteFooter: React.FC = () => {
     message: '',
     honey: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -18,13 +19,22 @@ const SiteFooter: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.honey.trim()) return; // Honeypot catches simple bots
-    // TODO: Wire up API endpoint for sending messages securely.
-    console.log('Contact form submitted', {
-      name: formData.name.trim(),
-      email: formData.email.trim(),
-      message: formData.message.trim(),
-    });
-    setFormData({ name: '', email: '', message: '', honey: '' });
+
+    const name = formData.name.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    const subject = encodeURIComponent(`Website message from ${name || 'visitor'}`);
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+    const mailtoLink = `mailto:dani.iancu@yahoo.com?subject=${subject}&body=${body}`;
+
+    setIsSubmitting(true);
+    try {
+      window.location.href = mailtoLink;
+    } finally {
+      setIsSubmitting(false);
+      setFormData({ name: '', email: '', message: '', honey: '' });
+    }
   };
 
   return (
@@ -118,7 +128,8 @@ const SiteFooter: React.FC = () => {
             </div>
               <button
                 type="submit"
-                className="w-full rounded-full bg-white text-black font-bold uppercase tracking-[0.2em] text-[10px] py-3 hover:bg-gray-200 transition-colors"
+                disabled={isSubmitting}
+                className="w-full rounded-full bg-white text-black font-bold uppercase tracking-[0.2em] text-[10px] py-3 hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Send Securely
               </button>

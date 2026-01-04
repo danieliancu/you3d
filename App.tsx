@@ -82,17 +82,17 @@ const HOME_FAQ: { q: string; body: React.ReactNode }[] = [
 
 const PRODUCTION_STEPS = [
   {
-    title: 'Upload photos & confirm preview',
+    title: 'Upload photos and preview',
     description: 'Share your shots and get an instant preview to lock in the pose and likeness.',
     image: '/images/1.png',
   },
   {
-    title: '3D modeling and adjustments',
+    title: '3D modeling adjustments',
     description: 'Our artists refine details, proportions, and textures for a true-to-photo mini.',
     image: '/images/2.png',
   },
   {
-    title: 'High-detail 3D printing',
+    title: 'High-detail of 3D printing',
     description: 'Premium printing captures fine features with a smooth, collector-grade finish.',
     image: '/images/3.png',
   },
@@ -103,6 +103,17 @@ const PRODUCTION_STEPS = [
   },
 ];
 
+const TESTIMONIALS = [
+  { author: 'Daphne Clara', text: 'This figurine is incredibly detailed and looks just like my friend -- best gift idea ever.', rating: 5 },
+  { author: 'Franklin Sweet', text: "I can't believe how realistic the 3D printed character turned out. Perfect birthday surprise.", rating: 5 },
+  { author: 'Alger Morris', text: 'Personalization options are awesome and the print quality is top-notch.', rating: 5 },
+  { author: 'Abraham Smith', text: 'Such a unique way to surprise someone with their own miniature statue.', rating: 5 },
+  { author: 'Maya Torres', text: 'The AI preview matched my photo and the final piece looked premium.', rating: 5 },
+  { author: 'Leo Martins', text: 'Fast turnaround and the vinyl finish feels like a designer toy.', rating: 5 },
+  { author: 'Chloe Bennett', text: 'Loved the pet figurine -- captures all the little markings perfectly.', rating: 5 },
+  { author: 'Iris Cole', text: 'Great customer support and the pose guidance made it easy to upload.', rating: 5 },
+];
+
 
 const App: React.FC = () => {
   const [selectedSize, setSelectedSize] = useState('6cm');
@@ -111,12 +122,20 @@ const App: React.FC = () => {
   const [isFaqOpen, setIsFaqOpen] = useState<number | null>(null);
   const [zoomedImageUrl, setZoomedImageUrl] = useState<string | null>(null);
   const [validationWarning, setValidationWarning] = useState<string | null>(null);
+  const [testimonialIndex, setTestimonialIndex] = useState(0);
   
   const fileInputRefs = useRef<Record<number, HTMLInputElement | null>>({});
   const styleSectionRef = useRef<HTMLElement | null>(null);
 
   const activeStyle = STYLES.find(s => s.id === selectedStyle) || STYLES[0];
   const price = PRICING[selectedSize]?.[selectedStyle] || { current: 'N/A', original: 'N/A' };
+
+  useEffect(() => {
+    if (!PRICING[selectedSize][selectedStyle]) {
+      const firstAvailable = Object.keys(PRICING[selectedSize])[0];
+      setSelectedStyle(firstAvailable);
+    }
+  }, [selectedSize, selectedStyle]);
 
   useEffect(() => {
     const newSlots: UploadSlot[] = activeStyle.slots.map((s, idx) => ({
@@ -128,12 +147,7 @@ const App: React.FC = () => {
       validationError: null
     }));
     setSlots(newSlots);
-
-    if (!PRICING[selectedSize][selectedStyle]) {
-      const firstAvailable = Object.keys(PRICING[selectedSize])[0];
-      setSelectedStyle(firstAvailable);
-    }
-  }, [selectedStyle, selectedSize]);
+  }, [selectedStyle]);
 
   const handleImageUpload = (slotId: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -193,8 +207,16 @@ const App: React.FC = () => {
     }
   };
 
+  const handleNextTestimonial = () => {
+    setTestimonialIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+  };
+
+  const handlePrevTestimonial = () => {
+    setTestimonialIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+  };
+
   return (
-    <div className="bg-white min-h-screen text-gray-800 font-sans selection:bg-orange-100">
+    <div className="bg-gray-50 min-h-screen text-gray-800 font-sans selection:bg-orange-100">
       {/* Validation Warning Modal */}
       {validationWarning && (
         <div className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
@@ -278,11 +300,11 @@ const App: React.FC = () => {
       </section>
 
       {/* Production Process */}
-      <section className="py-0 md:py-16 pb-0 mt-0 md:mt-10">
+      <section className="bg-gray-50 py-0 md:py-16 pb-0 mt-0 md:mt-10">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-20">
-          </div>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8 md:gap-4">
+
+          {/* Desktop/tablet: full illustrations and descriptions */}
+          <div className="hidden md:flex md:flex-row md:items-center md:justify-between gap-8 md:gap-4">
             {PRODUCTION_STEPS.map((step, idx) => (
               <React.Fragment key={step.title}>
                 <div className="flex-1 flex flex-col items-center text-center gap-4">
@@ -318,11 +340,32 @@ const App: React.FC = () => {
               </React.Fragment>
             ))}
           </div>
+
+          {/* Mobile: simplified 4-column badges with arrows between */}
+          <div className="mt-10 grid grid-cols-4 gap-6 items-start steps-grid md:hidden">
+            {PRODUCTION_STEPS.map((step, idx) => (
+              <div key={step.title} className="flex flex-col items-center text-center gap-3 step-card relative">
+                <div className="step-number rounded-full bg-orange-500 text-white font-black flex items-center justify-center shadow-lg">
+                  {idx + 1}
+                </div>
+                <p className="step-title text-gray-900 font-black leading-tight">
+                  {step.title}
+                </p>
+                {idx < PRODUCTION_STEPS.length - 1 && (
+                  <div className="arrow-mobile" aria-hidden="true">
+                    <svg className="w-full h-full text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+                      <path strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" d="M8 24h28m-6-8 8 8-8 8" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Product Selection */}
-      <section className="py-16 bg-gray-50" ref={styleSectionRef}>
+      <section className="py-16 md:pt-0 bg-gray-50" ref={styleSectionRef}>
         <div className="max-w-7xl mx-auto px-4">
           <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
             <div className="grid lg:grid-cols-[1fr_1.5fr] divide-x divide-gray-100">
@@ -393,7 +436,7 @@ const App: React.FC = () => {
                     <div className="mt-8 flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
                       {slots.map((slot) => (
                         <div key={slot.id} className="flex flex-col items-center gap-4">
-                          <p className="text-md font-black text-gray-400">{slot.label}</p>
+                          <p className="text-md font-black">{slot.label}</p>
                           
                           <div className="w-full flex-1 h-[300px] bg-white rounded-xl border-2 border-dashed border-gray-200 relative overflow-hidden flex flex-col items-center justify-center p-4">
                             {slot.result.status === 'success' ? (
@@ -447,7 +490,7 @@ const App: React.FC = () => {
                                     <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform border border-gray-100">
                                       <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" /></svg>
                                     </div>
-                                    <span className="text-md font-bold text-gray-400 tracking-widest">Upload Photo</span>
+                                    <span className="text-md font-bold tracking-widest">Upload Photo</span>
                                   </>
                                 )}
                               </div>
@@ -497,47 +540,67 @@ const App: React.FC = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 bg-gray-50">
+      <section className="pt-8 pb-24 md:py-18 bg-gray-50">
         <div className="w-full px-4">
-          <div className="overflow-hidden relative">
+          {/* Desktop/tablet marquee */}
+          <div className="overflow-hidden relative hidden md:block">
             <div className="flex gap-6 animate-marquee will-change-transform">
-              {[
-                { author: 'Daphne Clara', text: 'This figurine is incredibly detailed and looks just like my friend—best gift idea ever.', rating: 5 },
-                { author: 'Franklin Sweet', text: 'I can’t believe how realistic the 3D printed character turned out. Perfect birthday surprise.', rating: 5 },
-                { author: 'Alger Morris', text: 'Personalization options are awesome and the print quality is top-notch.', rating: 5 },
-                { author: 'Abraham Smith', text: 'Such a unique way to surprise someone with their own miniature statue.', rating: 5 },
-                { author: 'Maya Torres', text: 'The AI preview matched my photo and the final piece looked premium.', rating: 5 },
-                { author: 'Leo Martins', text: 'Fast turnaround and the vinyl finish feels like a designer toy.', rating: 5 },
-                { author: 'Chloe Bennett', text: 'Loved the pet figurine—captures all the little markings perfectly.', rating: 5 },
-                { author: 'Iris Cole', text: 'Great customer support and the pose guidance made it easy to upload.', rating: 5 },
-              ]
-                .concat([
-                  { author: 'Daphne Clara', text: 'This figurine is incredibly detailed and looks just like my friend—best gift idea ever.', rating: 5 },
-                  { author: 'Franklin Sweet', text: 'I can’t believe how realistic the 3D printed character turned out. Perfect birthday surprise.', rating: 5 },
-                  { author: 'Alger Morris', text: 'Personalization options are awesome and the print quality is top-notch.', rating: 5 },
-                  { author: 'Abraham Smith', text: 'Such a unique way to surprise someone with their own miniature statue.', rating: 5 },
-                  { author: 'Maya Torres', text: 'The AI preview matched my photo and the final piece looked premium.', rating: 5 },
-                  { author: 'Leo Martins', text: 'Fast turnaround and the vinyl finish feels like a designer toy.', rating: 5 },
-                  { author: 'Chloe Bennett', text: 'Loved the pet figurine—captures all the little markings perfectly.', rating: 5 },
-                  { author: 'Iris Cole', text: 'Great customer support and the pose guidance made it easy to upload.', rating: 5 },
-                ])
-                .map((t, idx) => (
-                  <div
-                    key={idx}
-                    className="min-w-[260px] sm:min-w-[320px] max-w-sm p-7 bg-white rounded-2xl border border-gray-100 flex flex-col justify-between shadow-sm"
-                  >
-                    <div>
-                       <div className="flex gap-1 mb-4">
-                         {Array.from({length: t.rating}).map((_, i) => <span key={i} className="text-orange-400 text-lg">★</span>)}
-                       </div>
-                       <p className="text-base leading-relaxed text-gray-700 font-medium italic mb-6">"{t.text}"</p>
-                    </div>
-                    <div className="flex items-center gap-3 border-t border-gray-200 pt-4">
-                      <span className="text-sm font-semibold tracking-wide text-orange-400">{t.author}</span>
-                    </div>
+              {TESTIMONIALS.concat(TESTIMONIALS).map((t, idx) => (
+                <div
+                  key={`${t.author}-${idx}`}
+                  className="min-w-[260px] sm:min-w-[320px] max-w-sm p-7 bg-white rounded-2xl border border-gray-100 flex flex-col justify-between shadow-sm"
+                >
+                  <div>
+                     <div className="flex gap-1 mb-4">
+                       {Array.from({length: t.rating}).map((_, i) => <span key={i} className="text-orange-400 text-lg">★</span>)}
+                     </div>
+                     <p className="text-base leading-relaxed text-gray-700 font-medium italic mb-6">"{t.text}"</p>
                   </div>
-                ))}
+                  <div className="flex items-center gap-3 border-t border-gray-200 pt-4">
+                    <span className="text-sm font-semibold tracking-wide text-orange-400">{t.author}</span>
+                  </div>
+                </div>
+              ))}
             </div>
+          </div>
+
+          {/* Mobile slider */}
+          <div className="md:hidden relative w-full">
+            <div className="p-7 bg-white rounded-2xl border border-gray-100 flex flex-col justify-between shadow-sm min-h-[240px]">
+              <div>
+                <div className="flex gap-1 mb-4">
+                  {Array.from({ length: TESTIMONIALS[testimonialIndex].rating }).map((_, i) => (
+                    <span key={i} className="text-orange-400 text-lg">★</span>
+                  ))}
+                </div>
+                <p className="text-base leading-relaxed text-gray-700 font-medium italic mb-6">
+                  "{TESTIMONIALS[testimonialIndex].text}"
+                </p>
+              </div>
+              <div className="flex items-center gap-3 border-t border-gray-200 pt-4">
+                <span className="text-sm font-semibold tracking-wide text-orange-400">
+                  {TESTIMONIALS[testimonialIndex].author}
+                </span>
+              </div>
+            </div>
+            <button
+              onClick={handlePrevTestimonial}
+              className="absolute -left-3 top-1/2 -translate-y-1/2 p-3 bg-white rounded-full shadow-lg border border-gray-200 active:scale-95"
+              aria-label="Previous testimonial"
+            >
+              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={handleNextTestimonial}
+              className="absolute -right-3 top-1/2 -translate-y-1/2 p-3 bg-white rounded-full shadow-lg border border-gray-200 active:scale-95"
+              aria-label="Next testimonial"
+            >
+              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </div>
       </section>
@@ -606,6 +669,42 @@ const App: React.FC = () => {
         @media (max-width: 768px) {
           .animate-marquee {
             animation-duration: 16s;
+          }
+        }
+        .steps-grid {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+        .step-card {
+          gap: 12px;
+          position: relative;
+        }
+        .step-number {
+          width: 76px;
+          height: 76px;
+          font-size: 36px;
+        }
+        .step-title {
+          font-size: 16px;
+        }
+        .arrow-mobile {
+          position: absolute;
+          top: 25%;
+          right: clamp(-14px, -1vw, -8px);
+          transform: translate(50%, -50%);
+          width: clamp(18px, 6vw, 28px);
+          height: clamp(18px, 6vw, 28px);
+        }
+        @media (max-width: 768px) {
+          .step-card {
+            gap: clamp(10px, 3vw, 14px);
+          }
+          .step-number {
+            width: clamp(48px, 16vw, 64px);
+            height: clamp(48px, 16vw, 64px);
+            font-size: clamp(24px, 6vw, 32px);
+          }
+          .step-title {
+            font-size: clamp(12px, 3.2vw, 15px);
           }
         }
       `}</style>
