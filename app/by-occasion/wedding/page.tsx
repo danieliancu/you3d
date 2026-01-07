@@ -3,7 +3,7 @@
 import React from 'react';
 import SiteHeader from '../../../components/SiteHeader';
 import SiteFooter from '../../../components/SiteFooter';
-import OccasionCustomizer from '../../../components/OccasionCustomizer';
+import OccasionCustomizer, { type OccasionStyle } from '../../../components/OccasionCustomizer';
 import TestimonialsFaqSection from '../../../components/TestimonialsFaqSection';
 import { HOME_FAQ, TESTIMONIALS } from '../../../content/homeSections';
 
@@ -38,7 +38,7 @@ const WEDDING_PRICING: Record<string, Record<string, { current: string; original
   },
 };
 
-const WEDDING_STYLES = [
+const WEDDING_STYLES: OccasionStyle[] = [
   {
     id: 'Groom',
     label: 'Groom',

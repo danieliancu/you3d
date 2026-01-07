@@ -4,14 +4,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { generateStylizedAvatar, validateImage } from '../services/geminiService';
 import { GenerationResult } from '../types';
 
-type SlotRole = 'person' | 'pet' | 'object';
+export type SlotRole = 'person' | 'pet' | 'object';
 
-interface OccasionStyleSlot {
+export interface OccasionStyleSlot {
   role: SlotRole;
   label: string;
 }
 
-interface OccasionStyle {
+export interface OccasionStyle {
   id: string;
   label: string;
   image?: string | null;
