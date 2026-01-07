@@ -1,3 +1,7 @@
+CAUTA SI AICI!!
+https://www.additive-x.com/
+
+
 1) Filament
 
 PrimaSelect PLA – Brown
@@ -69,7 +73,8 @@ Vallejo Matte Varnish sau Polyurethane Matt Varnish
 
 🧠 Rezumat rapid
 Material				Scop
-Filament Brown				culoare de bază pentru piele
+Filament PLA+ Brown				culoare de bază pentru piele
+Filament PLA+ Skin				culoare de bază pentru piele
 Sanding 400–800				netezire PLA înainte de vopsire
 Pensule Nicpro				aplicare culori & detalii
 Vallejo Primer White			bază pentru vopsea

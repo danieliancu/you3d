@@ -4,6 +4,8 @@ import { generateStylizedAvatar, validateImage } from './services/geminiService'
 import { GenerationResult } from './types';
 import SiteHeader from './components/SiteHeader';
 import SiteFooter from './components/SiteFooter';
+import TestimonialsFaqSection from './components/TestimonialsFaqSection';
+import { HOME_FAQ, TESTIMONIALS } from './content/homeSections';
 
 interface UploadSlot {
   id: number;
@@ -25,7 +27,7 @@ const PRICING: Record<string, Record<string, { current: string; original: string
   '6cm': {
     '1 person': { current: '39.95', original: '100.00' },
     '2 people': { current: '75.95', original: '189.00' },
-    '2 people (connected)': { current: '80.95', original: '130.00' },
+    'Couple': { current: '80.95', original: '130.00' },
     '1 pet': { current: '45.95', original: '80.00' },
     '1 person + 1 pet': { current: '75.95', original: '130.00' },
     'Non-human figure': { current: '35.95', original: '70.00' },
@@ -33,7 +35,7 @@ const PRICING: Record<string, Record<string, { current: string; original: string
   '8cm': {
     '1 person': { current: '79.95', original: '130.00' },
     '2 people': { current: '150.00', original: '240.00' },
-    '2 people (connected)': { current: '155.00', original: '250.00' },
+    'Couple': { current: '155.00', original: '250.00' },
     '1 pet': { current: '85.95', original: '140.00' },
     '1 person + 1 pet': { current: '150.00', original: '240.00' },
     'Non-human figure': { current: '79.95', original: '130.00' },
@@ -47,7 +49,7 @@ const PRICING: Record<string, Record<string, { current: string; original: string
 const STYLES = [
   { id: "1 person", label: "1 person", image: "/images/1person.png", slots: [{ role: "person", label: "Photo" }] },
   { id: "2 people", label: "2 people", image: "/images/2person.png", slots: [{ role: "person", label: "Person 1" }, { role: "person", label: "Person 2" }] },
-  { id: "2 people (connected)", label: "2 people (connected)", image: "/images/2personConnected.png", slots: [{ role: "person", label: "Both people (one photo)" }] },
+  { id: "Couple", label: "Couple", image: "/images/2personConnected.png", slots: [{ role: "person", label: "Both people (one photo)" }] },
   { id: "1 pet", label: "1 pet", image: "/images/pet.png", slots: [{ role: "pet", label: "Pet Photo" }] },
   { id: "1 person + 1 pet", label: "1 person + 1 pet", image: "/images/1person1pet.png", slots: [{ role: "person", label: "Person" }, { role: "pet", label: "Pet" }] },
   { id: "Non-human figure", label: "Non-human figure", image: "/images/nonhuman.png", slots: [{ role: "person", label: "Figure Photo" }] },
@@ -60,25 +62,6 @@ const SIZE_INCHES: Record<string, string> = {
   '8cm': '3.15 in',
   '10cm': '3.93 in',
 };
-
-const HOME_FAQ: { q: string; body: React.ReactNode }[] = [
-  {
-    q: 'How long does it take?',
-    body: <p className="text-md text-gray-500 leading-relaxed">Standard production takes 3-5 business days, plus shipping time.</p>,
-  },
-  {
-    q: 'Why choose our mini figures?',
-    body: <p className="text-md text-gray-500 leading-relaxed">We use premium high-detail 3D printing and expert digital sculpting for maximum likeness.</p>,
-  },
-  {
-    q: 'Can I change my preview? How to charge?',
-    body: <p className="text-md text-gray-500 leading-relaxed">Previews are generated instantly and free. You can change your photo and regenerate until you are satisfied before printing.</p>,
-  },
-  {
-    q: 'Do you crop the photo for me?',
-    body: <p className="text-md text-gray-500 leading-relaxed">Our AI and designers handle composition to ensure the best full-body 3D result.</p>,
-  },
-];
 
 const PRODUCTION_STEPS = [
   {
@@ -103,26 +86,13 @@ const PRODUCTION_STEPS = [
   },
 ];
 
-const TESTIMONIALS = [
-  { author: 'Daphne Clara', text: 'This figurine is incredibly detailed and looks just like my friend -- best gift idea ever.', rating: 5 },
-  { author: 'Franklin Sweet', text: "I can't believe how realistic the 3D printed character turned out. Perfect birthday surprise.", rating: 5 },
-  { author: 'Alger Morris', text: 'Personalization options are awesome and the print quality is top-notch.', rating: 5 },
-  { author: 'Abraham Smith', text: 'Such a unique way to surprise someone with their own miniature statue.', rating: 5 },
-  { author: 'Maya Torres', text: 'The AI preview matched my photo and the final piece looked premium.', rating: 5 },
-  { author: 'Leo Martins', text: 'Fast turnaround and the vinyl finish feels like a designer toy.', rating: 5 },
-  { author: 'Chloe Bennett', text: 'Loved the pet figurine -- captures all the little markings perfectly.', rating: 5 },
-  { author: 'Iris Cole', text: 'Great customer support and the pose guidance made it easy to upload.', rating: 5 },
-];
-
 
 const App: React.FC = () => {
   const [selectedSize, setSelectedSize] = useState('6cm');
   const [selectedStyle, setSelectedStyle] = useState('1 person');
   const [slots, setSlots] = useState<UploadSlot[]>([]);
-  const [isFaqOpen, setIsFaqOpen] = useState<number | null>(null);
   const [zoomedImageUrl, setZoomedImageUrl] = useState<string | null>(null);
   const [validationWarning, setValidationWarning] = useState<string | null>(null);
-  const [testimonialIndex, setTestimonialIndex] = useState(0);
   
   const fileInputRefs = useRef<Record<number, HTMLInputElement | null>>({});
   const styleSectionRef = useRef<HTMLElement | null>(null);
@@ -205,14 +175,6 @@ const App: React.FC = () => {
         s.id === slotId ? { ...s, result: { ...s.result, status: 'error', errorMessage: error.message } } : s
       ));
     }
-  };
-
-  const handleNextTestimonial = () => {
-    setTestimonialIndex((prev) => (prev + 1) % TESTIMONIALS.length);
-  };
-
-  const handlePrevTestimonial = () => {
-    setTestimonialIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
   };
 
   return (
@@ -539,108 +501,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="pt-8 pb-24 md:py-18 bg-gray-50">
-        <div className="w-full px-4">
-          {/* Desktop/tablet marquee */}
-          <div className="overflow-hidden relative hidden md:block">
-            <div className="flex gap-6 animate-marquee will-change-transform">
-              {TESTIMONIALS.concat(TESTIMONIALS).map((t, idx) => (
-                <div
-                  key={`${t.author}-${idx}`}
-                  className="min-w-[260px] sm:min-w-[320px] max-w-sm p-7 bg-white rounded-2xl border border-gray-100 flex flex-col justify-between shadow-sm"
-                >
-                  <div>
-                     <div className="flex gap-1 mb-4">
-                       {Array.from({length: t.rating}).map((_, i) => <span key={i} className="text-orange-400 text-lg">★</span>)}
-                     </div>
-                     <p className="text-base leading-relaxed text-gray-700 font-medium italic mb-6">"{t.text}"</p>
-                  </div>
-                  <div className="flex items-center gap-3 border-t border-gray-200 pt-4">
-                    <span className="text-sm font-semibold tracking-wide text-orange-400">{t.author}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Mobile slider */}
-          <div className="md:hidden relative w-full">
-            <div className="p-7 bg-white rounded-2xl border border-gray-100 flex flex-col justify-between shadow-sm min-h-[240px]">
-              <div>
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: TESTIMONIALS[testimonialIndex].rating }).map((_, i) => (
-                    <span key={i} className="text-orange-400 text-lg">★</span>
-                  ))}
-                </div>
-                <p className="text-base leading-relaxed text-gray-700 font-medium italic mb-6">
-                  "{TESTIMONIALS[testimonialIndex].text}"
-                </p>
-              </div>
-              <div className="flex items-center gap-3 border-t border-gray-200 pt-4">
-                <span className="text-sm font-semibold tracking-wide text-orange-400">
-                  {TESTIMONIALS[testimonialIndex].author}
-                </span>
-              </div>
-            </div>
-            <button
-              onClick={handlePrevTestimonial}
-              className="absolute -left-3 top-1/2 -translate-y-1/2 p-3 bg-white rounded-full shadow-lg border border-gray-200 active:scale-95"
-              aria-label="Previous testimonial"
-            >
-              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={handleNextTestimonial}
-              className="absolute -right-3 top-1/2 -translate-y-1/2 p-3 bg-white rounded-full shadow-lg border border-gray-200 active:scale-95"
-              aria-label="Next testimonial"
-            >
-              <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="pb-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-black italic text-gray-900 mb-12 tracking-tighter uppercase text-center">Frequently Asked Questions</h2>
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div className="flex items-center justify-center h-full">
-              <img
-                src="/images/group.png"
-                alt="Customers with 3D figures"
-                className="h-auto md:max-h-96 w-auto relative md:absolute"
-                style = {{ mixBlendMode: "multiply", objectFit:"contain" } }
-              />
-            </div>
-            <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm">
-              <div className="space-y-4">
-                {HOME_FAQ.map((faq, idx) => (
-                  <div key={idx} className="border-b border-gray-100 last:border-0">
-                    <button 
-                      onClick={() => setIsFaqOpen(isFaqOpen === idx ? null : idx)}
-                      className="w-full py-5 flex justify-between items-center text-left"
-                    >
-                      <span className="text-md font-bold uppercase tracking-wide text-gray-700">{faq.q}</span>
-                      <span className="text-gray-400 text-xl font-light">{isFaqOpen === idx ? '-' : '+'}</span>
-                    </button>
-                    {isFaqOpen === idx && (
-                      <div className="pb-5">
-                        <div className="text-md text-gray-500 leading-relaxed">{faq.body}</div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TestimonialsFaqSection faqs={HOME_FAQ} testimonials={TESTIMONIALS} />
 
       <SiteFooter />
 
@@ -658,18 +519,6 @@ const App: React.FC = () => {
         }
         .animate-scale-up {
           animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-50%); }
-        }
-        .animate-marquee {
-          animation: marquee 22s linear infinite;
-        }
-        @media (max-width: 768px) {
-          .animate-marquee {
-            animation-duration: 16s;
-          }
         }
         .steps-grid {
           grid-template-columns: repeat(4, minmax(0, 1fr));

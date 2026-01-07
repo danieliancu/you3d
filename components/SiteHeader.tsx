@@ -3,18 +3,56 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 
-const NAV_LINKS = [
-  'Hot Sale',
-  'Choose Your Figure Style',
-  'Accessories',
-  'By Occasion',
-  'By Recipient',
-  'Greeting Card',
-  'New In',
+type NavItem = string | { label: string; href: string };
+
+const NAV_LINKS: { label: string; items: NavItem[] }[] = [
+  {
+    label: 'BY OCCASION',
+    items: [
+      { label: 'Wedding', href: '/by-occasion/wedding' },
+      'Birthday',
+      "Mother's Day",
+      "Father's Day",
+      'Sports',
+      'Travel',
+      'Graduation',
+    ],
+  },
+  {
+    label: 'BY RECIPIENT',
+    items: [
+      'For Team',
+      'For Family',
+      'For Dad',
+      'For Couple',
+      'For Graduates',
+      'For Pet Lovers',
+      'For Mom',
+      'For Brother',
+      'For Sister',
+      'For Policeman',
+      'For Nurse',
+      'For Boss',
+      'For Travel Lover',
+      'For Doctor',
+      'For Sport Lover',
+      'Cosplay',
+    ],
+  },
+];
+
+const PAGE_LINKS = [
+  { label: 'About Us', href: '/about-us' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Contact Us', href: '/contact-us' },
 ];
 
 const SiteHeader: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const resolveItem = (item: NavItem) => ({
+    label: typeof item === 'string' ? item : item.label,
+    href: typeof item === 'string' ? '#' : item.href,
+  });
 
   return (
     <nav className="border-b sticky top-0 bg-white/95 backdrop-blur-sm z-50">
@@ -23,10 +61,34 @@ const SiteHeader: React.FC = () => {
           <Link href="/" className="flex items-center gap-1" aria-label="3D Figure home">
             <img src="/images/logo.png" alt="3D Figure logo" className="w-auto" style={{ height: '3rem' }} />
           </Link>
-          <div className="hidden lg:flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider text-gray-700">
-            {NAV_LINKS.map((label, idx) => (
-              <a key={idx} href="#" className={label === 'Hot Sale' ? 'text-orange-500' : ''}>
-                {label}
+          <div className="hidden lg:flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider text-gray-700 uppercase">
+            {NAV_LINKS.map((link) => (
+              <div key={link.label} className="relative group">
+                <button className="flex items-center gap-1 hover:text-orange-500 transition-colors">
+                  {link.label}
+                  <svg className="w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path d="M5.5 7.5l4.5 4.5 4.5-4.5" />
+                  </svg>
+                </button>
+                <div className="absolute left-0 top-full pt-3 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all">
+                  <div className="bg-white border border-gray-100 rounded-xl shadow-xl p-3 min-w-[220px]">
+                    <div className="grid gap-1 text-[11px] font-bold uppercase tracking-wider text-gray-700">
+                      {link.items.map((item) => {
+                        const { label, href } = resolveItem(item);
+                        return (
+                          <a key={label} href={href} className="px-3 py-2 rounded-lg hover:bg-orange-50 hover:text-orange-600 transition-colors">
+                            {label}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {PAGE_LINKS.map((link) => (
+              <a key={link.label} href={link.href} className="hover:text-orange-500 transition-colors uppercase">
+                {link.label}
               </a>
             ))}
           </div>
@@ -62,17 +124,39 @@ const SiteHeader: React.FC = () => {
       </div>
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-2 text-[11px] font-bold uppercase tracking-wider text-gray-700">
-            {NAV_LINKS.map((label, idx) => (
-              <a
-                key={idx}
-                href="#"
-                className={`py-2 ${label === 'Hot Sale' ? 'text-orange-500' : ''}`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {label}
-              </a>
+          <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-4 text-[11px] font-bold uppercase tracking-wider text-gray-700 uppercase">
+            {NAV_LINKS.map((link) => (
+              <div key={link.label} className="flex flex-col gap-2">
+                <span className="py-2 uppercase">{link.label}</span>
+                <div className="grid gap-1 pl-3">
+                  {link.items.map((item) => {
+                    const { label, href } = resolveItem(item);
+                    return (
+                      <a
+                        key={label}
+                        href={href}
+                        className="py-1.5 text-gray-600 hover:text-orange-600 transition-colors uppercase"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {label}
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
             ))}
+            <div className="flex flex-col gap-2">
+              {PAGE_LINKS.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="py-2 hover:text-orange-600 transition-colors uppercase"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       )}
