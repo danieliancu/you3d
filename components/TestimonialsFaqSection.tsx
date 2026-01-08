@@ -105,7 +105,7 @@ const TestimonialsFaqSection: React.FC<TestimonialsFaqSectionProps> = ({ faqs, t
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div className="flex items-center justify-center h-full">
               <img
-                src="/images/group.png"
+                src="/images/group.webp"
                 alt="Customers with 3D figures"
                 className="h-auto md:max-h-96 w-auto relative md:absolute"
                 style={{ mixBlendMode: 'multiply', objectFit: 'contain' }}

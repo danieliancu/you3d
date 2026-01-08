@@ -1,0 +1,4 @@
+Comprimă și convertește imaginile mari în WebP/AVIF (hero + 1–4 + iconuri).
+Lazy‑load pentru imaginile care nu sunt în viewport (pași + iconuri).
+Pentru Next, folosește next/image cu priority doar la hero.
+Scoate cât poți din App.tsx în server components (dacă e Next), ca să reduci JS inițial.

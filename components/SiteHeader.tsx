@@ -59,7 +59,7 @@ const SiteHeader: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-1" aria-label="3D Figure home">
-            <img src="/images/logo.png" alt="3D Figure logo" className="w-auto" style={{ height: '3rem' }} />
+            <img src="/images/logo.webp" alt="3D Figure logo" className="w-auto" style={{ height: '3rem' }} />
           </Link>
           <div className="hidden lg:flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider text-gray-700 uppercase">
             {NAV_LINKS.map((link) => (

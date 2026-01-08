@@ -44,7 +44,7 @@ const SiteFooter: React.FC = () => {
 
           <div>
           <Link href="/" className="flex items-center gap-1" aria-label="3D Figure home">
-            <img src="/images/logo.png" alt="3D Figure logo" className="w-auto mb-4" style={{ height: '3rem' }} />
+            <img src="/images/logo.webp" alt="3D Figure logo" className="w-auto mb-4" style={{ height: '3rem' }} />
           </Link>
             <ul className="space-y-4 text-[10px] font-bold uppercase tracking-widest text-gray-400">
               <li><a href="/about-us" className="hover:text-white transition-colors">About Us</a></li>

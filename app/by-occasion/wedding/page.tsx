@@ -42,25 +42,25 @@ const WEDDING_STYLES: OccasionStyle[] = [
   {
     id: 'Groom',
     label: 'Groom',
-    image: '/images/occasion/wedding/wedding-groom.png',
+    image: '/images/occasion/wedding/wedding-groom.webp',
     slots: [{ role: 'person', label: 'Groom Photo' }],
   },
   {
     id: 'Bride',
     label: 'Bride',
-    image: '/images/occasion/wedding/wedding-bride.png',
+    image: '/images/occasion/wedding/wedding-bride.webp',
     slots: [{ role: 'person', label: 'Bride Photo' }],
   },
   {
     id: 'Couple',
     label: 'Couple',
-    image: '/images/occasion/wedding/wedding-couple-hands.png',
+    image: '/images/occasion/wedding/wedding-couple-hands.webp',
     slots: [{ role: 'person', label: 'Couple Photo' }],
   },
   {
     id: 'Groom + Bride',
     label: 'Groom + Bride',
-    image: '/images/occasion/wedding/wedding-groom-bride-2photos.png',
+    image: '/images/occasion/wedding/wedding-groom-bride-2photos.webp',
     slots: [
       { role: 'person', label: 'Groom Photo' },
       { role: 'person', label: 'Bride Photo' },
@@ -69,7 +69,7 @@ const WEDDING_STYLES: OccasionStyle[] = [
   {
     id: 'Cake',
     label: 'Cake',
-    image: '/images/occasion/wedding/wedding-cake.png',
+    image: '/images/occasion/wedding/wedding-cake.webp',
     slots: [
       { role: 'person', label: 'Groom Photo' },
       { role: 'person', label: 'Bride Photo' },

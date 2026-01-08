@@ -47,12 +47,12 @@ const PRICING: Record<string, Record<string, { current: string; original: string
 };
 
 const STYLES = [
-  { id: "1 person", label: "1 person", image: "/images/1person.png", slots: [{ role: "person", label: "Photo" }] },
-  { id: "2 people", label: "2 people", image: "/images/2person.png", slots: [{ role: "person", label: "Person 1" }, { role: "person", label: "Person 2" }] },
-  { id: "Couple", label: "Couple", image: "/images/2personConnected.png", slots: [{ role: "person", label: "Both people (one photo)" }] },
-  { id: "1 pet", label: "1 pet", image: "/images/pet.png", slots: [{ role: "pet", label: "Pet Photo" }] },
-  { id: "1 person + 1 pet", label: "1 person + 1 pet", image: "/images/1person1pet.png", slots: [{ role: "person", label: "Person" }, { role: "pet", label: "Pet" }] },
-  { id: "Non-human figure", label: "Non-human figure", image: "/images/nonhuman.png", slots: [{ role: "person", label: "Figure Photo" }] },
+  { id: "1 person", label: "1 person", image: "/images/1person.webp", slots: [{ role: "person", label: "Photo" }] },
+  { id: "2 people", label: "2 people", image: "/images/2person.webp", slots: [{ role: "person", label: "Person 1" }, { role: "person", label: "Person 2" }] },
+  { id: "Couple", label: "Couple", image: "/images/2personConnected.webp", slots: [{ role: "person", label: "Both people (one photo)" }] },
+  { id: "1 pet", label: "1 pet", image: "/images/pet.webp", slots: [{ role: "pet", label: "Pet Photo" }] },
+  { id: "1 person + 1 pet", label: "1 person + 1 pet", image: "/images/1person1pet.webp", slots: [{ role: "person", label: "Person" }, { role: "pet", label: "Pet" }] },
+  { id: "Non-human figure", label: "Non-human figure", image: "/images/nonhuman.webp", slots: [{ role: "person", label: "Figure Photo" }] },
 ];
 
 const SIZES = ['4cm', '6cm', '8cm', '10cm'];
@@ -67,22 +67,22 @@ const PRODUCTION_STEPS = [
   {
     title: 'Upload photos and preview',
     description: 'Share your shots and get an instant preview to lock in the pose and likeness.',
-    image: '/images/1.png',
+    image: '/images/1.webp',
   },
   {
     title: '3D modeling adjustments',
     description: 'Our artists refine details, proportions, and textures for a true-to-photo mini.',
-    image: '/images/2.png',
+    image: '/images/2.webp',
   },
   {
     title: 'High-detail of 3D printing',
     description: 'Premium printing captures fine features with a smooth, collector-grade finish.',
-    image: '/images/3.png',
+    image: '/images/3.webp',
   },
   {
     title: 'Secure, careful delivery',
     description: 'Each figurine is checked, packed with care, and shipped with tracking.',
-    image: '/images/4.png',
+    image: '/images/4.webp',
   },
 ];
 
@@ -231,7 +231,7 @@ const App: React.FC = () => {
         className="relative overflow-hidden bg-[#F7F9FB]"
         style={{
           backgroundImage:
-            "url('/images/hero.png')",
+            "url('/images/hero.webp')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
