@@ -23,15 +23,13 @@ export const validateImage = async (userImageBase64: string, role: string, style
   const cleanUserImg = userImageBase64.split(',')[1] || userImageBase64;
 
   let criteria = "";
-  if (styleId === 'Cake') {
+  if (styleId === '1 person') {
     criteria = "The image must contain exactly ONE clear person. If there are zero or multiple people, it is invalid.";
-  } else if (styleId === '1 person') {
-    criteria = "The image must contain exactly ONE clear person. If there are zero or multiple people, it is invalid.";
-  } else if (styleId === '2 people' || styleId === '2 people (connected)') {
-    criteria = "The image must contain exactly TWO people. For 'connected', they should be together in the same frame if possible. If there is only one or more than two people, it is invalid.";
-  } else if (styleId === 'Couple (holding hands)') {
-    criteria = "The image must contain exactly TWO people standing together. If there is only one or more than two people, it is invalid.";
-  } else if (styleId === 'Groom + Bride (2 photos)' || styleId === 'Groom' || styleId === 'Bride' || styleId === 'Cake') {
+  } else if (styleId === '2 people') {
+    criteria = "This is a single-person upload slot. The image must contain exactly ONE clear person. If there are zero or multiple people, it is invalid.";
+  } else if (styleId === 'Couple') {
+    criteria = "The image must contain exactly TWO people standing together in the same frame. If there is only one or more than two people, it is invalid.";
+  } else if (styleId === 'Groom + Bride (2 photos)' || styleId === 'Groom' || styleId === 'Bride') {
     criteria = "The image must contain exactly ONE clear person. If there are zero or multiple people, it is invalid.";
   } else if (styleId === '1 pet') {
     criteria = "The image must contain exactly ONE animal (dog, cat, etc.). If it's a human, a car, or any non-animal object, it is invalid.";
